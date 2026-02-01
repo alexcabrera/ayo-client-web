@@ -981,8 +981,33 @@
         sidebarClose.addEventListener('click', closeSidebar);
         sidebarBackdrop.addEventListener('click', closeSidebar);
 
+        // Check for token in URL params (from QR code scan)
+        function checkURLParams() {
+            const params = new URLSearchParams(window.location.search);
+            const token = params.get('token');
+            
+            if (token) {
+                // Token in URL - use same origin as API base
+                API_BASE = window.location.origin;
+                AUTH_TOKEN = token;
+                
+                // Clear token from URL (for security) without triggering reload
+                const cleanURL = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, document.title, cleanURL);
+                
+                tryConnect();
+                return true;
+            }
+            return false;
+        }
+
         // Check for saved connection
         function checkSavedConnection() {
+            // First check URL params (QR code flow)
+            if (checkURLParams()) {
+                return;
+            }
+            
             const saved = localStorage.getItem('ayo_connection');
             if (saved) {
                 try {
@@ -992,7 +1017,7 @@
                 } catch (e) {}
             }
             
-            // If opened from server, try same-origin
+            // If opened from server (not file://), try same-origin auto-connect
             if (window.location.protocol !== 'file:') {
                 API_BASE = window.location.origin;
                 tryConnect();
