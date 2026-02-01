@@ -480,6 +480,10 @@
             background: var(--bg-tertiary);
         }
 
+        .session-item {
+            touch-action: manipulation;
+        }
+
         .session-item.active {
             background: var(--accent-subtle);
         }
@@ -684,6 +688,8 @@
             color: var(--text-muted);
             cursor: pointer;
             touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .reasoning-header:hover {
@@ -843,8 +849,8 @@
             <div class="connect-divider">or enter manually</div>
             
             <div class="connect-form">
-                <input type="url" id="serverUrl" placeholder="Server URL (e.g., https://xxx.trycloudflare.com)" autocapitalize="off" autocorrect="off">
-                <input type="text" id="authToken" placeholder="Token (from ayo serve output)" autocapitalize="off" autocorrect="off">
+                <input type="url" id="serverUrl" placeholder="Server URL (e.g., https://xxx.trycloudflare.com)" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">
+                <input type="text" id="authToken" placeholder="Token (from ayo serve output)" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">
                 <button class="connect-btn secondary" id="connectBtn">Connect</button>
             </div>
             
@@ -916,6 +922,7 @@
                         rows="1"
                         autocapitalize="sentences"
                         autocorrect="on"
+                        enterkeyhint="send"
                     ></textarea>
                     <button id="sendBtn" disabled>Send</button>
                 </div>
