@@ -538,6 +538,15 @@
             padding-left: calc(1rem + var(--safe-left));
             padding-right: calc(1rem + var(--safe-right));
             -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .messages-inner {
+            display: flex;
+            flex-direction: column;
+            min-height: min-content;
         }
 
         .message {
@@ -907,10 +916,12 @@
         </aside>
 
         <main class="chat">
-            <div class="messages" id="messages">
-                <div class="empty-state" id="emptyState">
-                    <h2>Start a conversation</h2>
-                    <p>Select an agent and type a message to begin.</p>
+            <div class="messages" id="messagesScroll">
+                <div class="messages-inner" id="messages">
+                    <div class="empty-state" id="emptyState">
+                        <h2>Start a conversation</h2>
+                        <p>Select an agent and type a message to begin.</p>
+                    </div>
                 </div>
             </div>
 
@@ -958,6 +969,7 @@
         const statusText = document.getElementById('statusText');
         const sessionList = document.getElementById('sessionList');
         const newSessionBtn = document.getElementById('newSessionBtn');
+        const messagesScroll = document.getElementById('messagesScroll');
         const messagesContainer = document.getElementById('messages');
         const emptyState = document.getElementById('emptyState');
         const messageInput = document.getElementById('messageInput');
@@ -1514,7 +1526,7 @@
         }
 
         function scrollToBottom() {
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            messagesScroll.scrollTop = messagesScroll.scrollHeight;
         }
 
         function setStatus(status, text) {
